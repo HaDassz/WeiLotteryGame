@@ -25,12 +25,12 @@ class WidgetExample(BoxLayout):
 
     def do_button_click(self):
         for i in range(1,11):
-            number = random.randint(1,10)
+            number = random.randint(1,9)
             print(number)
             self.my_text = str(number)
             
             if number == 1:
-                self.play_sound("./audio/1.mp3")
+                self.play_sound("./audio/教育部辭典1.mp3")
             elif number == 2:
                 self.play_sound("./audio/2.mp3")
             elif number == 3:
