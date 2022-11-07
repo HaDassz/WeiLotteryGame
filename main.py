@@ -47,8 +47,6 @@ class WidgetExample(BoxLayout):
                 self.play_sound("./audio/8.mp3")
             elif number == 9:
                 self.play_sound("./audio/9.mp3")
-            elif number == 10:
-                self.play_sound("./audio/10.wav")
             time.sleep(2)
             
             
