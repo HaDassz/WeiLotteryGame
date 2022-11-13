@@ -40,9 +40,9 @@ class WidgetExample(BoxLayout):
             elif number == 5:
                 self.play_sound("./audio/5.mp3")
             elif number == 6:
-                self.play_sound("./audio/6.mp3")
+                self.play_sound("./audio/教育部辭典6.mp3")
             elif number == 7:
-                self.play_sound("./audio/7.mp3")
+                self.play_sound("./audio/教育部辭典7.mp3")
             elif number == 8:
                 self.play_sound("./audio/8.mp3")
             elif number == 9:
