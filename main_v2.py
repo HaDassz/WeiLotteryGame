@@ -7,6 +7,7 @@ Created on Mon Oct 31 18:49:49 2022
 import random
 import time
 import threading
+from threading import Event
 from kivymd.app import App, MDApp
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -18,15 +19,22 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.audio import SoundLoader
 
-class WidgetExample(Screen):
+class WidgetExample(BoxLayout, Screen):
     my_text = StringProperty('Start')
+    event = Event()
     def on_button_click(self):
         # Start a new thread. Be aware of creating new thread every time you press the button.
         # In which case you need to keep a reference or track the created thread.
-        threading.Thread(target = self.do_button_click).start()
+        self.event.clear()
+        global thread1
+        thread1 = threading.Thread(target=self.do_button_click, args=(self.event,))
+        thread1.start()
 
-    def do_button_click(self):
+    def do_button_click(self, event):
         for i in range(1,11):
+            if event.is_set():
+                self.my_text = "Start"
+                break
             number = random.randint(1,9)
             print(number)
             self.my_text = str(number)
@@ -51,6 +59,12 @@ class WidgetExample(Screen):
                 self.play_sound("./audio/9.mp3")
             time.sleep(2)
             
+    def stop_sound(self):
+        self.event.set()
+        self.my_text = "Start"
+        print("Main stopping thread")
+        # thread1.join()
+        
             
     def play_sound(self, filename):
         sound = SoundLoader.load(filename)

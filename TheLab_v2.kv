@@ -4,7 +4,7 @@ ScreenManager:
 
 <WidgetExample>:
     name: 'menu'
-    BoxLayout:
+    MDBoxLayout:
 	    orientation: 'vertical'
         MDLabel: 
             text: 'Picture'
@@ -12,6 +12,10 @@ ScreenManager:
         MDRectangleFlatButton:
             text: 'Click me'
             on_press: root.on_button_click()
+            pos_hint: {'center_x':0.5,'center_y':0.7}
+        MDRectangleFlatButton:
+            text: 'Stop play sound'
+            on_press: root.stop_sound()
             pos_hint: {'center_x':0.5,'center_y':0.6}
         MDRectangleFlatButton:
             text: 'Second stage'
