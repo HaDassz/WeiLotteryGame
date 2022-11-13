@@ -1,0 +1,32 @@
+ScreenManager:
+    WidgetExample:
+    SecondStage:
+
+<WidgetExample>:
+    name: 'menu'
+    BoxLayout:
+	    orientation: 'vertical'
+        MDLabel: 
+            text: 'Picture'
+            halign: 'center'
+        MDRectangleFlatButton:
+            text: 'Click me'
+            on_press: root.on_button_click()
+            pos_hint: {'center_x':0.5,'center_y':0.6}
+        MDRectangleFlatButton:
+            text: 'Second stage'
+            on_press: root.manager.current = 'second_stage'
+            pos_hint: {'center_x':0.5,'center_y':0.5}
+        MDLabel:
+            text: root.my_text
+            halign: 'center'
+
+<SecondStage>:
+    name: 'second_stage'
+    MDLabel:
+        text: 'Welcome to second stage'
+        halign: 'center'
+    MDRectangleFlatButton:
+        text: 'Back'
+        pos_hint: {'center_x':0.5,'center_y':0.1}
+        on_press: root.manager.current = 'menu'
