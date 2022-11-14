@@ -22,6 +22,7 @@ from kivy.core.audio import SoundLoader
 class WidgetExample(BoxLayout, Screen):
     my_text = StringProperty('Start')
     event = Event()
+    stage1_correct_numbers = []
     def on_button_click(self):
         # Start a new thread. Be aware of creating new thread every time you press the button.
         # In which case you need to keep a reference or track the created thread.
@@ -36,6 +37,7 @@ class WidgetExample(BoxLayout, Screen):
                 self.my_text = "Start"
                 break
             number = random.randint(1,9)
+            self.stage1_correct_numbers.append(number)
             print(number)
             self.my_text = str(number)
             
