@@ -10,7 +10,9 @@ import threading
 from threading import Event
 from kivymd.app import App, MDApp
 from kivy.lang.builder import Builder
+from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.image import Image
 from kivy.metrics import dp
 from kivy.animation import Animation
 from kivy.uix.widget import Widget
@@ -19,7 +21,19 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.audio import SoundLoader
 
-class WidgetExample(BoxLayout, Screen):
+class WelcomePage1(Screen):
+    pass
+
+class WelcomePage2(Screen):
+    pass
+
+class ImageButton(ButtonBehavior, Image):
+    def on_press(self):
+        print("This image button is pressed!")
+        
+
+
+class FirstStage(BoxLayout, Screen):
     my_text = StringProperty('Start')
     event = Event()
     stage1_correct_numbers = []
@@ -78,7 +92,9 @@ class SecondStage(Screen):
 
 # Create the screen manager
 sm = ScreenManager()
-sm.add_widget(WidgetExample(name='menu'))
+sm.add_widget(WelcomePage1(name='welcom_page1'))
+sm.add_widget(WelcomePage2(name='welcom_page2'))
+sm.add_widget(FirstStage(name='first_stage'))
 sm.add_widget(SecondStage(name='second_stage'))
 
 class DemoApp(MDApp):

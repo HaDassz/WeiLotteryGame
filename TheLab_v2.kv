@@ -1,9 +1,32 @@
 ScreenManager:
-    WidgetExample:
+    WelcomePage1:
+    WelcomePage2:
+    FirstStage:
     SecondStage:
 
-<WidgetExample>:
-    name: 'menu'
+<WelcomePage1>:
+    name: 'welcome_page1'
+    ImageButton:
+        source: './images/Temple1_withoutWord.png'
+        on_press: root.manager.current = 'welcome_page2'
+    MDLabel:
+        text: "請點擊圖片"
+        font_name: './fonts/msjh.ttc'
+        font_size: '60sp'
+        pos_hint: {'center_x':0.5,'center_y':0.2}
+        halign: 'center'
+        color: 1,0,0,1
+
+<WelcomePage2>:
+    name: 'welcome_page2'
+    ImageButton:
+        source: './images/Temple1_withWord.png'
+        on_press: root.manager.current = 'first_stage'
+    
+
+
+<FirstStage>:
+    name: 'first_stage'
     MDBoxLayout:
 	    orientation: 'vertical'
         MDLabel: 
@@ -34,4 +57,6 @@ ScreenManager:
     MDRectangleFlatButton:
         text: 'Back'
         pos_hint: {'center_x':0.5,'center_y':0.1}
-        on_press: root.manager.current = 'menu'
+        on_press: 
+            root.manager.current = 'first_stage'
+            root.manager.transition.direction = 'right'
