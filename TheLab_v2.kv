@@ -22,9 +22,15 @@ ScreenManager:
     ImageButton:
         source: './images/Temple1_withWord.png'
         on_press: root.manager.current = 'first_stage'
+    ImageButton:
+        source: './images/icons8-left-50.png'
+        pos_hint: {'center_x':0.2,'center_y':0.5}
+        on_press:root.manager.current = 'welcome_page1'
+    ImageButton:
+        source: './images/icons8-double-right-50.png'
+        pos_hint: {'center_x':0.9,'center_y':0.5}
+        on_press:root.manager.current = 'first_stage'
     
-
-
 <FirstStage>:
     name: 'first_stage'
     MDBoxLayout:
@@ -44,6 +50,12 @@ ScreenManager:
             text: 'Second stage'
             on_press: root.manager.current = 'second_stage'
             pos_hint: {'center_x':0.5,'center_y':0.5}
+        MDRectangleFlatButton:
+            text: 'Back'
+            pos_hint: {'center_x':0.5,'center_y':0.4}
+            on_press: 
+                root.manager.current = 'welcome_page2'
+                # root.manager.transition.direction = 'right'
         MDLabel:
             text: root.my_text
             halign: 'center'
@@ -59,4 +71,4 @@ ScreenManager:
         pos_hint: {'center_x':0.5,'center_y':0.1}
         on_press: 
             root.manager.current = 'first_stage'
-            root.manager.transition.direction = 'right'
+            # root.manager.transition.direction = 'right'
