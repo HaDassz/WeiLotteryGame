@@ -21,17 +21,18 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.audio import SoundLoader
 
+
+class ImageButton(ButtonBehavior, Image):
+    def on_press(self):
+        print("This image button is pressed!")
 class WelcomePage1(Screen):
     pass
 
 class WelcomePage2(Screen):
     pass
 
-class ImageButton(ButtonBehavior, Image):
-    def on_press(self):
-        print("This image button is pressed!")
-        
-
+class Instruction1(Screen):
+    pass
 
 class FirstStage(BoxLayout, Screen):
     my_text = StringProperty('Start')
@@ -94,6 +95,7 @@ class SecondStage(Screen):
 sm = ScreenManager()
 sm.add_widget(WelcomePage1(name='welcom_page1'))
 sm.add_widget(WelcomePage2(name='welcom_page2'))
+sm.add_widget(Instruction1(name='instruction'))
 sm.add_widget(FirstStage(name='first_stage'))
 sm.add_widget(SecondStage(name='second_stage'))
 
