@@ -35,8 +35,14 @@ class WelcomePage2(Screen):
 class Instruction1(Screen):
     pass
 
-class FirstStage(BoxLayout, Screen):
-    my_text = StringProperty('Start')
+class TempShow1(Screen):
+    pass
+
+class TempShow2(Screen):
+    pass
+
+class FirstStage(Screen):
+    my_text = StringProperty('開始')
     event = Event()
     stage1_correct_numbers = []
     def on_button_click(self):
@@ -48,38 +54,46 @@ class FirstStage(BoxLayout, Screen):
         thread1.start()
 
     def do_button_click(self, event):
-        for i in range(1,11):
+        ROUND_ = 7
+        for i in range(ROUND_):
             if event.is_set():
-                self.my_text = "Start"
+                self.my_text = u"開始"
                 break
-            number = random.randint(1,9)
-            self.stage1_correct_numbers.append(number)
-            print(number)
-            self.my_text = str(number)
-            
-            if number == 1:
-                self.play_sound("./audio/教育部辭典1.mp3")
-            elif number == 2:
-                self.play_sound("./audio/2.mp3")
-            elif number == 3:
-                self.play_sound("./audio/3.mp3")
-            elif number == 4:
-                self.play_sound("./audio/4.mp3")
-            elif number == 5:
-                self.play_sound("./audio/5.mp3")
-            elif number == 6:
-                self.play_sound("./audio/教育部辭典6.mp3")
-            elif number == 7:
-                self.play_sound("./audio/教育部辭典7.mp3")
-            elif number == 8:
-                self.play_sound("./audio/8.mp3")
-            elif number == 9:
-                self.play_sound("./audio/9.mp3")
-            time.sleep(2)
-            
+            if i == ROUND_ -1:
+                self.my_text = "結束"
+                break
+            else:
+                number = random.randint(1,9)
+                self.stage1_correct_numbers.append(number)
+                print(number)
+                print(self.stage1_correct_numbers)
+                self.my_text = str(number)
+                if number == 1:
+                    self.play_sound("./audio/教育部辭典1.mp3")
+                elif number == 2:
+                    self.play_sound("./audio/2.mp3")
+                elif number == 3:
+                    self.play_sound("./audio/3.mp3")
+                elif number == 4:
+                    self.play_sound("./audio/4.mp3")
+                elif number == 5:
+                    self.play_sound("./audio/5.mp3")
+                elif number == 6:
+                    self.play_sound("./audio/教育部辭典6.mp3")
+                elif number == 7:
+                    self.play_sound("./audio/教育部辭典7.mp3")
+                elif number == 8:
+                    self.play_sound("./audio/8.mp3")
+                elif number == 9:
+                    self.play_sound("./audio/9.mp3")
+                    
+                time.sleep(1)
+                self.my_text = "下一個"
+                time.sleep(1)
+
     def stop_sound(self):
         self.event.set()
-        self.my_text = "Start"
+        self.my_text = "開始"
         print("Main stopping thread")
         # thread1.join()
         
@@ -147,7 +161,9 @@ class SecondStage(Screen):
 sm = ScreenManager()
 sm.add_widget(WelcomePage1(name='welcom_page1'))
 sm.add_widget(WelcomePage2(name='welcom_page2'))
-sm.add_widget(Instruction1(name='instruction'))
+sm.add_widget(Instruction1(name='instruction1'))
+sm.add_widget(TempShow1(name='temp_show1'))
+sm.add_widget(TempShow2(name='temp_show2'))
 sm.add_widget(FirstStage(name='first_stage'))
 sm.add_widget(SecondStage(name='second_stage'))
 
