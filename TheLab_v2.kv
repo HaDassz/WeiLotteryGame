@@ -55,13 +55,17 @@ ScreenManager:
         markup: True
         font_name: './fonts/msjh.ttc'
         font_size: '20sp'
-        text:'''難度一：「待會你看到的數字便是此次中獎號碼，[color=ff0000]不用記順序[/color]，記住我給你看的數字就好。你瞭解了嗎？」\n難度二：「待會你[color=ff0000]聽到[/color]的數字便是此次中獎號碼，[color=ff0000]不用記順序[/color]，記住我講的數字就好。你瞭解了嗎？」\n難度三：「待會你看到的數字是這一期的中獎號碼，不過你[color=ff0000]一定要按照我的順序[/color]填寫號碼才可中獎。你瞭解了嗎？」\n難度四：「待會你[color=ff0000]聽到[/color]的數字是這一期的中獎號碼，但跟之前不一樣，你必須在我講完號後[color=ff0000]按數字大小順序[/color]填寫號碼才能中獎。你瞭解了嗎？」\n難度五：「天機不可洩漏，我已告知你太多。這次只能告訴你，將你聽到的[color=ff0000]『OOOO』[/color]數字加起來就是這一期的彩券中獎號碼。這樣瞭解了嗎？」'''
+        text:'''難度一：「待會你看到的數字便是此次中獎號碼，[color=ff0000]不用記順序[/color]，記住我給你看的數字就好。你瞭解了嗎？」'''
+    
+    
+    # \n難度二：「待會你[color=ff0000]聽到[/color]的數字便是此次中獎號碼，[color=ff0000]不用記順序[/color]，記住我講的數字就好。你瞭解了嗎？」\n難度三：「待會你看到的數字是這一期的中獎號碼，不過你[color=ff0000]一定要按照我的順序[/color]填寫號碼才可中獎。你瞭解了嗎？」\n難度四：「待會你[color=ff0000]聽到[/color]的數字是這一期的中獎號碼，但跟之前不一樣，你必須在我講完號後[color=ff0000]按數字大小順序[/color]填寫號碼才能中獎。你瞭解了嗎？」\n難度五：「天機不可洩漏，我已告知你太多。這次只能告訴你，將你聽到的[color=ff0000]『OOOO』[/color]數字加起來就是這一期的彩券中獎號碼。這樣瞭解了嗎？」
     # ImageButton:
     #     source: './images/icons8-left-50.png'
     #     pos_hint: {'center_x':0.05,'center_y':0.5}
     #     on_press:
     #         root.manager.current = 'welcome_page2'
     #         root.manager.transition.direction = 'right'
+    
     ImageButton:
         source: './images/icons8-double-right-50.png'
         pos_hint: {'center_x':0.9,'center_y':0.2}
@@ -98,6 +102,36 @@ ScreenManager:
             text: root.my_text
             halign: 'center'
             font_size: '30sp'
+
+# <FirstStage>:
+#     name: 'first_stage'
+#     MDBoxLayout:
+# 	    orientation: 'vertical'
+#         MDLabel: 
+#             text: 'Picture'
+#             halign: 'center'
+#         MDRectangleFlatButton:
+#             text: 'Click me'
+#             on_press: root.on_button_click()
+#             pos_hint: {'center_x':0.5,'center_y':0.7}
+#         MDRectangleFlatButton:
+#             text: 'Stop play sound'
+#             on_press: root.stop_sound()
+#             pos_hint: {'center_x':0.5,'center_y':0.6}
+#         MDRectangleFlatButton:
+#             text: 'Second stage'
+#             on_press: root.manager.current = 'second_stage'
+#             pos_hint: {'center_x':0.5,'center_y':0.5}
+#         MDRectangleFlatButton:
+#             text: 'Back'
+#             pos_hint: {'center_x':0.5,'center_y':0.4}
+#             on_press: 
+#                 root.manager.current = 'welcome_page2'
+#                 # root.manager.transition.direction = 'right'
+#         MDLabel:
+#             text: root.my_text
+#             halign: 'center'
+#             font_size: '30sp'
 
 <SecondStage>:
     name: 'second_stage'
