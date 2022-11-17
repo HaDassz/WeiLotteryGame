@@ -5,6 +5,7 @@ ScreenManager:
     TempShow1:
     # TempShow2:
     FirstStage:
+    NumberInput1:
     SecondStage:
 
 <WelcomePage1>:
@@ -136,11 +137,13 @@ ScreenManager:
         halign: 'center'
         pos_hint: {'center_x':0.73, 'center_y':0.7}
         font_size: '50sp'
+        allow_stretch: True
     
     MDRectangleFlatButton:
-        text: 'Stop play sound'
+        text: '停止'
+        font_name: './fonts/msjh.ttc'
         on_press: root.stop_sound()
-        pos_hint: {'center_x':0.5,'center_y':0.6}
+        pos_hint: {'center_x':0.2,'center_y':0.6}
     ImageButton:
         source: './images/icons8-double-right-50.png'
         pos_hint: {'center_x':0.87,'center_y':0.25}
@@ -148,6 +151,7 @@ ScreenManager:
         size_hint_y: 0.15
         on_press: root.on_button_click()
 
+<NumberInput1>:
 
 # <FirstStage>:       # 有數字聲音的，最早的唸數字及呈現數字
 #     name: 'first_stage'

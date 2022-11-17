@@ -22,7 +22,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.audio import SoundLoader
 
-
 class ImageButton(ButtonBehavior, Image):
     def on_press(self):
         print("This image button is pressed!")
@@ -54,8 +53,9 @@ class FirstStage(Screen):
         thread1.start()
 
     def do_button_click(self, event):
+        self.stage1_correct_numbers = []
         ROUND_ = 7
-        for i in range(ROUND_):
+        for i in range(ROUND_ + 1):
             if event.is_set():
                 self.my_text = u"開始"
                 break
