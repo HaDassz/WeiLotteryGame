@@ -61,6 +61,7 @@ class TempShow2(Screen):
 
 # global variables
 stage1_correct_numbers = []
+first_stage_user_response = []
 
 class FirstStage(Screen):
     my_text = StringProperty('開始')
@@ -124,16 +125,18 @@ class FirstStage(Screen):
         if sound:
             sound.play()
 
-first_stage_user_response = []
 class NumberInput1(Screen):
     # answer_one = StringProperty()
     # print(answer_one)
     
     def show_data(self):
+        first_stage_user_response = []
         first_stage_user_response.append(self.ids.answer_one.text)
         first_stage_user_response.append(self.ids.answer_two.text)
         first_stage_user_response.append(self.ids.answer_three.text)
         print(first_stage_user_response)
+        if first_stage_user_response != stage1_correct_numbers:
+            self.manager.current = 'temp_show1'
     
 
 class SecondStage(Screen):
