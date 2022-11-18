@@ -124,12 +124,16 @@ class FirstStage(Screen):
         if sound:
             sound.play()
 
+first_stage_user_response = []
 class NumberInput1(Screen):
     # answer_one = StringProperty()
     # print(answer_one)
     
     def show_data(self):
-        print(self.ids.answer_one.text, self.ids.answer_two.text, self.ids.answer_three.text,)
+        first_stage_user_response.append(self.ids.answer_one.text)
+        first_stage_user_response.append(self.ids.answer_two.text)
+        first_stage_user_response.append(self.ids.answer_three.text)
+        print(first_stage_user_response)
     
 
 class SecondStage(Screen):
