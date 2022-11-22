@@ -2,10 +2,11 @@
 """
 Created on Mon Oct 31 18:49:49 2022
 
-@author: Austin
+@author: Julian, Austin
 """
 import random
 import time
+from collections import Counter
 import threading
 from threading import Event
 from kivymd.app import App, MDApp
@@ -27,6 +28,7 @@ from kivy.core.audio import SoundLoader
 
 
 LabelBase.register(name="msjh", fn_regular="./fonts/msjh.ttc")
+LabelBase.register(name="ming", fn_regular="./fonts/cwTeXQMingZH-Medium.ttf")
 class ImageButton(ButtonBehavior, Image):
     def on_press(self):
         print("This image button is pressed!")
@@ -60,8 +62,10 @@ class TempShow2(Screen):
     pass
 
 # global variables
-stage1_correct_numbers = []
-first_stage_user_response = []
+## stage1_correct_numbers = []
+## first_stage_user_response = []
+current_digit = '2'
+difficulty = 1             # 難易度
 
 class FirstStage(Screen):
     my_text = StringProperty('開始')
@@ -75,11 +79,15 @@ class FirstStage(Screen):
         thread1.start()
 
     def do_button_click(self, event):
+        global stage1_correct_numbers
         stage1_correct_numbers = []
-        ROUND_ = 6
+        if self.ids.current_digit.text in ("2", "3", "4", "5", "6", "7", "8"):
+            ROUND_ = int(self.ids.current_digit.text)
+        else:
+            ROUND_ = 2
         for i in range(ROUND_ + 1):
             if event.is_set():
-                self.my_text = u"開始"
+                self.my_text = "開始"
                 break
             if i == ROUND_:
                 self.my_text = "結束"
@@ -126,18 +134,37 @@ class FirstStage(Screen):
             sound.play()
 
 class NumberInput1(Screen):
-    # answer_one = StringProperty()
-    # print(answer_one)
-    
-    def show_data(self):
+    def save_result(self):
+        global first_stage_user_response
         first_stage_user_response = []
         first_stage_user_response.append(self.ids.answer_one.text)
         first_stage_user_response.append(self.ids.answer_two.text)
         first_stage_user_response.append(self.ids.answer_three.text)
-        print(first_stage_user_response)
-        if first_stage_user_response != stage1_correct_numbers:
-            self.manager.current = 'temp_show1'
-    
+        first_stage_user_response.append(self.ids.answer_four.text)
+        first_stage_user_response.append(self.ids.answer_five.text)
+        first_stage_user_response.append(self.ids.answer_six.text)
+        first_stage_user_response.append(self.ids.answer_seven.text)
+        first_stage_user_response.append(self.ids.answer_eight.text)
+        first_stage_user_response = [int(res_num) for res_num in first_stage_user_response if res_num != '']
+        print("第一關填入的答案：", first_stage_user_response)
+        print(Counter(first_stage_user_response), Counter(stage1_correct_numbers))
+        
+class LotteryDraw(Screen):
+    def show_result(self):
+        if Counter(first_stage_user_response) == Counter(stage1_correct_numbers):
+            time.sleep(1)
+            self.manager.current = 'win_lottery'
+        else:
+            time.sleep(1)
+            self.manager.current = 'lose_lottery'
+
+class WinLottery(Screen):
+    pass
+
+class LoseLottery(Screen):
+    pass
+ 
+        
 
 class SecondStage(Screen):
     my_text = StringProperty('Start')
@@ -204,6 +231,9 @@ sm.add_widget(TempShow1(name='temp_show1'))
 sm.add_widget(TempShow2(name='temp_show2'))
 sm.add_widget(FirstStage(name='first_stage'))
 sm.add_widget(NumberInput1(name='number_input1'))
+sm.add_widget(LotteryDraw(name='lottery_draw'))
+sm.add_widget(WinLottery(name='win_lottery'))
+sm.add_widget(LoseLottery(name='lose_lottery'))
 sm.add_widget(SecondStage(name='second_stage'))
 
 class DemoApp(MDApp):
