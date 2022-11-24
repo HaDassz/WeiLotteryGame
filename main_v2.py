@@ -2,7 +2,7 @@
 """
 Created on Mon Oct 31 18:49:49 2022
 
-@author: Julian, Austin
+@author: Julian Hsu, Austin
 """
 import random
 import time
@@ -118,7 +118,7 @@ class FirstStage(Screen):
                     self.play_sound("./audio/9.mp3")
                     
                 time.sleep(1)
-                self.my_text = "下一個"
+                self.my_text = " "
                 time.sleep(1)
 
     def stop_sound(self):
