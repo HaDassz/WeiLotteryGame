@@ -6,6 +6,7 @@ Created on Mon Oct 31 18:49:49 2022
 """
 import random
 import time
+import os
 from collections import Counter
 import threading
 from threading import Event
@@ -26,9 +27,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.audio import SoundLoader
 
-
 LabelBase.register(name="msjh", fn_regular="./fonts/msjh.ttc")
 LabelBase.register(name="ming", fn_regular="./fonts/cwTeXQMingZH-Medium.ttf")
+
 class ImageButton(ButtonBehavior, Image):
     def on_press(self):
         print("This image button is pressed!")
@@ -60,12 +61,6 @@ class TempShow1(Screen):
 
 class TempShow2(Screen):
     pass
-
-# global variables
-## stage1_correct_numbers = []
-## first_stage_user_response = []
-current_digit = '2'
-difficulty = 1             # 難易度
 
 class FirstStage(Screen):
     my_text = StringProperty('開始')
