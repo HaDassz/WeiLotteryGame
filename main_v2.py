@@ -76,7 +76,8 @@ class Instruction2(Screen):
 
 class TempShow1_2(Screen):
     def go_stage_1_2(self):
-        self.manager.current = 'stage1_2'
+        if cur_status == 1 or cur_status == 2:
+            self.manager.current = 'stage1_2'
 
 class TempShow2(Screen):
     pass
