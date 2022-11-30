@@ -302,10 +302,6 @@ class LoseLottery1_3(Screen):
  
         
 
-
-
-
-
 # Create the screen manager
 sm = ScreenManager()
 sm.add_widget(WelcomePage1(name='welcom_page1'))
