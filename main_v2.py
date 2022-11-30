@@ -67,19 +67,23 @@ class StartPage(Screen):
 class Instruction1(Screen):
     print("cur_status=", cur_status)
     print("wrong_chance=", wrong_chance)
-    pass
+    
+    def go_diff_digits(self):
+        if cur_status in (1, 2):
+            self.manager.current = "temp_show1_2"
+        elif cur_status in (3, 4):
+            self.manager.current = "temp_show1_3"
 
 class Instruction2(Screen):
-    print("cur_status=", cur_status)
-    print("wrong_chance=", wrong_chance)
     pass
 
 class TempShow1_2(Screen):
-    def go_stage_1_2(self):
-        if cur_status == 1 or cur_status == 2:
-            self.manager.current = 'stage1_2'
+    pass
+    # def go_stage_1_2(self):
+    #     if cur_status == 1 or cur_status == 2:
+    #         self.manager.current = 'stage1_2'
 
-class TempShow2(Screen):
+class TempShow1_3(Screen):
     pass
 
 class Stage1_2(Screen):
@@ -150,6 +154,75 @@ class Stage1_2(Screen):
         if sound:
             sound.play()
 
+class Stage1_3(Screen):
+    my_text = StringProperty('開始')
+    event = Event()
+    
+    def on_button_click(self):
+        # Start a new thread. Be aware of creating new thread every time you press the button.
+        # In which case you need to keep a reference or track the created thread.
+        self.event.clear()
+        global thread1
+        thread1 = threading.Thread(target=self.do_button_click, args=(self.event,))
+        thread1.start()
+        self.ids.next_button.opacity = 1
+
+    def do_button_click(self, event):
+        global stage1_3_correct_numbers
+        stage1_3_correct_numbers = []
+        ROUND_ = 3
+        for i in range(ROUND_ + 1):
+            if event.is_set():
+                self.my_text = "開始"
+                break
+            if i == ROUND_:
+                self.my_text = "結束"
+                break
+            else:
+                number = random.randint(1,9)
+                stage1_3_correct_numbers.append(number)
+                print(number)
+                print(stage1_3_correct_numbers)
+                self.my_text = str(number)
+                if number == 1:
+                    self.play_sound("./audio/教育部辭典1.mp3")
+                elif number == 2:
+                    self.play_sound("./audio/2.mp3")
+                elif number == 3:
+                    self.play_sound("./audio/3.mp3")
+                elif number == 4:
+                    self.play_sound("./audio/4.mp3")
+                elif number == 5:
+                    self.play_sound("./audio/5.mp3")
+                elif number == 6:
+                    self.play_sound("./audio/教育部辭典6.mp3")
+                elif number == 7:
+                    self.play_sound("./audio/教育部辭典7.mp3")
+                elif number == 8:
+                    self.play_sound("./audio/8.mp3")
+                elif number == 9:
+                    self.play_sound("./audio/9.mp3")
+                    
+                time.sleep(1)
+                self.my_text = " "
+                time.sleep(1)
+    def stop_sound(self):
+        self.ids.next_button.opacity = 1
+        self.event.set()
+        self.my_text = "開始"
+        print("Main stopping thread")
+        # thread1.join()
+    
+    def go_next_screen(self):
+        self.my_text = '開始'
+        self.manager.current = 'number_input1_3'
+            
+    def play_sound(self, filename):
+        sound = SoundLoader.load(filename)
+        if sound:
+            sound.play()
+
+
 class NumberInput1_2(Screen):
     def save_result(self):
         global stage_1_2_response
@@ -160,6 +233,18 @@ class NumberInput1_2(Screen):
         print("1_2關填入的答案：", stage_1_2_response)
         print("1_2關填入答案：", Counter(stage_1_2_response))
         print("1_2關正確答案：", Counter(stage1_2_correct_numbers))
+        
+class NumberInput1_3(Screen):
+    def save_result(self):
+        global stage_1_3_response
+        stage_1_3_response = []
+        stage_1_3_response.append(self.ids.answer_one.text)
+        stage_1_3_response.append(self.ids.answer_two.text)
+        stage_1_3_response.append(self.ids.answer_three.text)
+        stage_1_3_response = [int(res_num) for res_num in stage_1_3_response if res_num != '']
+        print("1_3關填入的答案：", stage_1_3_response)
+        print("1_3關填入答案：", Counter(stage_1_3_response))
+        print("1_3關正確答案：", Counter(stage1_3_correct_numbers))
 
 class LotteryDraw1_2(Screen):
     def show_result(self):
@@ -167,6 +252,7 @@ class LotteryDraw1_2(Screen):
         global wrong_chance
         if Counter(stage_1_2_response) == Counter(stage1_2_correct_numbers):
             cur_status = cur_status + 1
+            wrong_chance = 2
             print("cur_status=", cur_status)
             print("wrong_chance=", wrong_chance)
             time.sleep(1)
@@ -180,68 +266,43 @@ class LotteryDraw1_2(Screen):
             print("wrong_chance=", wrong_chance)
             time.sleep(1)
             self.manager.current = 'lose_lottery1_2'
+            
+class LotteryDraw1_3(Screen):
+    def show_result(self):
+        global cur_status
+        global wrong_chance
+        if Counter(stage_1_3_response) == Counter(stage1_3_correct_numbers):
+            cur_status = cur_status + 1
+            wrong_chance = 2
+            print("cur_status=", cur_status)
+            print("wrong_chance=", wrong_chance)
+            time.sleep(1)
+            self.manager.current = 'win_lottery1_3'
+        else:
+            wrong_chance -= 1
+            if wrong_chance == 0:
+                wrong_chance = 2
+                cur_status -= 2
+            print("cur_status=", cur_status)
+            print("wrong_chance=", wrong_chance)
+            time.sleep(1)
+            self.manager.current = 'lose_lottery1_3'
 
 class WinLottery1_2(Screen):
     pass
 
 class LoseLottery1_2(Screen):
     pass
+
+class WinLottery1_3(Screen):
+    pass
+
+class LoseLottery1_3(Screen):
+    pass
  
         
 
-class SecondStage(Screen):
-    my_text = StringProperty('Start')
-    event = Event()
-    stage1_correct_numbers = []
-    def on_button_click(self):
-        # Start a new thread. Be aware of creating new thread every time you press the button.
-        # In which case you need to keep a reference or track the created thread.
-        self.event.clear()
-        global thread1
-        thread1 = threading.Thread(target=self.do_button_click, args=(self.event,))
-        thread1.start()
 
-    def do_button_click(self, event):
-        for i in range(1,11):
-            if event.is_set():
-                self.my_text = "Start"
-                break
-            number = random.randint(1,9)
-            self.stage1_correct_numbers.append(number)
-            print(number)
-            self.my_text = str(number)
-            
-            if number == 1:
-                self.play_sound("./audio/教育部辭典1.mp3")
-            elif number == 2:
-                self.play_sound("./audio/2.mp3")
-            elif number == 3:
-                self.play_sound("./audio/3.mp3")
-            elif number == 4:
-                self.play_sound("./audio/4.mp3")
-            elif number == 5:
-                self.play_sound("./audio/5.mp3")
-            elif number == 6:
-                self.play_sound("./audio/教育部辭典6.mp3")
-            elif number == 7:
-                self.play_sound("./audio/教育部辭典7.mp3")
-            elif number == 8:
-                self.play_sound("./audio/8.mp3")
-            elif number == 9:
-                self.play_sound("./audio/9.mp3")
-            time.sleep(2)
-            
-    def stop_sound(self):
-        self.event.set()
-        self.my_text = "Start"
-        print("Main stopping thread")
-        # thread1.join()
-        
-            
-    def play_sound(self, filename):
-        sound = SoundLoader.load(filename)
-        if sound:
-            sound.play()
 
 
 
@@ -252,13 +313,17 @@ sm.add_widget(StartPage(name='start_page'))
 sm.add_widget(Instruction1(name='instruction1'))
 sm.add_widget(Instruction2(name='instruction2'))
 sm.add_widget(TempShow1_2(name='temp_show1_2'))
-sm.add_widget(TempShow2(name='temp_show2'))
+sm.add_widget(TempShow1_3(name='temp_show1_3'))
 sm.add_widget(Stage1_2(name='stage1_2'))
+sm.add_widget(Stage1_3(name='stage1_3'))
 sm.add_widget(NumberInput1_2(name='number_input1_2'))
+sm.add_widget(NumberInput1_3(name='number_input1_3'))
 sm.add_widget(LotteryDraw1_2(name='lottery_draw1_2'))
+sm.add_widget(LotteryDraw1_3(name='lottery_draw1_3'))
 sm.add_widget(WinLottery1_2(name='win_lottery1_2'))
+sm.add_widget(WinLottery1_3(name='win_lottery1_3'))
 sm.add_widget(LoseLottery1_2(name='lose_lottery1_2'))
-sm.add_widget(SecondStage(name='second_stage'))
+sm.add_widget(LoseLottery1_3(name='lose_lottery1_3'))
 
 class DemoApp(MDApp):
     def build(self):

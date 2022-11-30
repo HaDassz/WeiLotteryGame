@@ -4,12 +4,17 @@ ScreenManager:
     Instruction1:
     Instruction2:
     TempShow1_2:
+    TempShow1_3:
     Stage1_2:
+    Stage1_3:
     NumberInput1_2:
+    NumberInput1_3:
     LotteryDraw1_2:
+    LotteryDraw1_3:
     WinLottery1_2:
+    WinLottery1_3:
     LoseLottery1_2:
-    SecondStage:
+    LoseLottery1_3:
 
 <WelcomePage1>:
     name: 'welcome_page1'
@@ -80,7 +85,7 @@ ScreenManager:
         pos_hint: {'center_x':0.87,'center_y':0.25}
         opacity: 0
         on_press:
-            root.manager.current = 'temp_show1_2'
+            root.go_diff_digits()
             root.manager.transition.direction = 'left'
     ImageButton:
         source: './images/icons8-left-50.png'
@@ -107,8 +112,23 @@ ScreenManager:
             root.manager.current = 'stage1_2'
             root.manager.transition.direction = 'left'
 
-
-
+<TempShow1_3>:
+    name: 'temp_show1_3'
+    ImageButton:
+        source: './images/Temple2_withWord.png'
+        on_press: root.manager.current = 'stage1_3'
+    ImageButton:
+        source: './images/icons8-left-50.png'
+        pos_hint: {'center_x':0.05,'center_y':0.5}
+        on_press:
+            root.manager.current = 'instruction1'
+            root.manager.transition.direction = 'right'
+    ImageButton:
+        source: './images/icons8-double-right-100.png'
+        pos_hint: {'center_x':0.95,'center_y':0.5}
+        on_press:
+            root.manager.current = 'stage1_3'
+            root.manager.transition.direction = 'left'
 
 <Stage1_2>:
     name: 'stage1_2'
@@ -156,6 +176,58 @@ ScreenManager:
         pos_hint: {'center_x':0.1,'center_y':0.8}
     MDLabel:
         text: "難度一\n位元二"
+        font_name: './fonts/msjh.ttc'
+        halign: 'center'
+        pos_hint: {'center_x':0.11, 'center_y':0.65}
+        font_size: '30sp'
+        allow_stretch: True
+    ImageButton:
+        source: './images/icons8-double-right-50.png'
+        pos_hint: {'center_x':0.87,'center_y':0.25}
+        opacity: 0
+        size_hint_y: 0.15
+        on_press: root.on_button_click()
+
+<Stage1_3>:
+    name: 'stage1_3'
+    Image:
+        source: './images/Temple2_NumberPresent.png'
+        opacity:0.8
+        pos_hint: {"top": 1}
+    MDLabel:
+        text: root.my_text
+        font_name: './fonts/msjh.ttc'
+        halign: 'center'
+        pos_hint: {'center_x':0.73, 'center_y':0.7}
+        font_size: '50sp'
+        allow_stretch: True
+    ImageButton:
+        source: './images/icons8-left-50.png'
+        pos_hint: {'center_x':0.05,'center_y':0.5}
+        size_hint_y: 0.15
+        size_hint_x: 0.15
+        on_press:
+            root.manager.current = 'temp_show1_3'
+            root.manager.transition.direction = 'right'
+    ImageButton:
+        id: next_button
+        opacity: 0
+        disabled: True if root.my_text != '結束' else False
+        source: './images/icons8-double-right-100.png'
+        pos_hint: {'center_x':0.95,'center_y':0.5}
+        size_hint_y: 0.15
+        size_hint_x: 0.15
+        on_press:
+            root.go_next_screen()
+            root.manager.transition.direction = 'left'
+    MDRectangleFlatButton:
+        text: '停止'
+        text_color: '#ff0100'
+        font_name: 'msjh'
+        on_press: root.stop_sound()
+        pos_hint: {'center_x':0.1,'center_y':0.8}
+    MDLabel:
+        text: "難度一\n位元三"
         font_name: './fonts/msjh.ttc'
         halign: 'center'
         pos_hint: {'center_x':0.11, 'center_y':0.65}
@@ -288,17 +360,84 @@ ScreenManager:
             root.manager.transition.direction = 'left'
         pos_hint: {'center_x':0.8,'center_y':0.3}
 
-    # MDIconButton:
-    #     icon: "eye-off"
-    #     pos_hint: {"center_y": .5}
-    #     pos: answer.width - self.width + dp(8), 0
-    #     theme_text_color: "Hint"
-    #     on_release:
-    #         self.icon = "eye" if self.icon == "eye-off" else "eye-off"
-    #         answer.password = False if answer.password is True else True
+<NumberInput1_3>:
+    name: 'number_input1_3'
+    Image:
+        source: './images/NumberInput_withWord.png'
+        opacity:0.5
+        pos_hint: {"top": 1}
+    ImageButton:
+        source: './images/icons8-left-50.png'
+        pos_hint: {'center_x':0.05,'center_y':0.5}
+        size_hint_y: 0.15
+        on_press:
+            root.manager.current = 'stage1_3'
+            root.manager.transition.direction = 'right'
+    MDTextField:
+        id: answer_one
+        font_name: 'msjh'
+        mode: 'fill'
+        size_hint_x: 0.1
+        size_hint_y: 0.1
+        height:　'2dp'
+        width: '2dp'
+        font_name_helper_text: 'msjh'
+        hint_text: '1. '
+        max_text_length: 1
+        pos_hint: {'center_x':0.22,'center_y':0.7}
+    MDTextField:
+        id: answer_two
+        font_name: 'msjh'
+        mode: 'fill'
+        size_hint_x: 0.1
+        size_hint_y: 0.1
+        height:　'2dp'
+        width: '2dp'
+        font_name_helper_text: 'msjh'
+        hint_text: '2. '
+        max_text_length: 1
+        pos_hint: {'center_x':0.34,'center_y':0.7}
+    MDTextField:
+        id: answer_three
+        font_name: 'msjh'
+        mode: 'fill'
+        size_hint_x: 0.1
+        size_hint_y: 0.1
+        height:　'2dp'
+        width: '2dp'
+        font_name_helper_text: 'msjh'
+        hint_text: '3. '
+        max_text_length: 1
+        pos_hint: {'center_x':0.46,'center_y':0.7}
+    MDRectangleFlatButton:
+        text: '填好了'
+        text_color: '#ff0200'
+        font_name: 'msjh'
+        on_release:
+            root.save_result()
+            root.manager.current = 'lottery_draw1_3'
+            root.manager.transition.direction = 'left'
+        pos_hint: {'center_x':0.8,'center_y':0.3}
+
+    
 
 <LotteryDraw1_2>:
     name: 'lottery_draw1_2'
+    Image:
+        opacity: 0.5
+        source: './images/BuyLotter.png'
+    MDRectangleFlatButton:
+        text: '開獎'
+        font_style: 'H3'
+        line_width: 2
+        line_color: 0, 0, 1, 1
+        text_color: '#ff0200'
+        font_name: 'msjh'
+        on_release: root.show_result()
+        pos_hint: {'center_x':0.5,'center_y':0.35}
+
+<LotteryDraw1_3>:
+    name: 'lottery_draw1_3'
     Image:
         opacity: 0.5
         source: './images/BuyLotter.png'
@@ -323,8 +462,30 @@ ScreenManager:
             root.manager.current = 'start_page'
             root.manager.transition.direction = 'left'
 
+<WinLottery1_3>:
+    name: 'win_lottery1_3'
+    Image:
+        source: './images/BuyLotter_win.png'
+    ImageButton:
+        source: './images/icons8-double-right-100.png'
+        pos_hint: {'center_x':0.95,'center_y':0.5}
+        on_press:
+            root.manager.current = 'start_page'
+            root.manager.transition.direction = 'left'
+
 <LoseLottery1_2>:
     name: 'lose_lottery1_2'
+    Image:
+        source: './images/BuyLotter_lose.png'
+    ImageButton:
+        source: './images/icons8-double-right-100.png'
+        pos_hint: {'center_x':0.95,'center_y':0.5}
+        on_press:
+            root.manager.current = 'start_page'
+            root.manager.transition.direction = 'left'
+
+<LoseLottery1_3>:
+    name: 'lose_lottery1_3'
     Image:
         source: './images/BuyLotter_lose.png'
     ImageButton:
@@ -348,44 +509,12 @@ ScreenManager:
         font_size: '40sp'
         text:'''難度二：「待會你[color=ff0000]聽到[/color]的數字便是此次中獎號碼，[color=ff0000]不用記順序[/color]，記住我講的數字就好。你瞭解了嗎？」'''
 
-# <Stage1_2>:       # 有數字聲音的，最早的唸數字及呈現數字
-#     name: 'stage1_2'
-#     MDBoxLayout:
-# 	    orientation: 'vertical'
-#         MDLabel: 
-#             text: 'Picture'
-#             halign: 'center'
-#         MDRectangleFlatButton:
-#             text: 'Click me'
-#             on_press: root.on_button_click()
-#             pos_hint: {'center_x':0.5,'center_y':0.7}
-#         MDRectangleFlatButton:
-#             text: 'Stop play sound'
-#             on_press: root.stop_sound()
-#             pos_hint: {'center_x':0.5,'center_y':0.6}
-#         MDRectangleFlatButton:
-#             text: 'Second stage'
-#             on_press: root.manager.current = 'second_stage'
-#             pos_hint: {'center_x':0.5,'center_y':0.5}
-#         MDRectangleFlatButton:
-#             text: 'Back'
-#             pos_hint: {'center_x':0.5,'center_y':0.4}
-#             on_press: 
-#                 root.manager.current = 'start_page'
-#                 # root.manager.transition.direction = 'right'
-#         MDLabel:
-#             text: root.my_text
-#             halign: 'center'
-#             font_size: '30sp'
 
-<SecondStage>:
-    name: 'second_stage'
-    MDLabel:
-        text: 'Welcome to second stage'
-        halign: 'center'
-    MDRectangleFlatButton:
-        text: 'Back'
-        pos_hint: {'center_x':0.5,'center_y':0.1}
-        on_press: 
-            root.manager.current = 'stage1_2'
-            # root.manager.transition.direction = 'right'
+    # MDIconButton:
+    #     icon: "eye-off"
+    #     pos_hint: {"center_y": .5}
+    #     pos: answer.width - self.width + dp(8), 0
+    #     theme_text_color: "Hint"
+    #     on_release:
+    #         self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+    #         answer.password = False if answer.password is True else True
